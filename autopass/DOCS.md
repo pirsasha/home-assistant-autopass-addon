@@ -28,3 +28,100 @@
 
 Для официального Frigate add-on внутри Home Assistant обычно используется
 внутренний адрес `http://ccab4aaf-frigate:5000`.
+
+## Подключение к Home Assistant
+
+### 1. API-ключ add-on
+
+Откройте **Настройки → Дополнения → Автопропуск → Конфигурация**, задайте
+уникальный `api_key` длиной не менее 32 символов и перезапустите add-on.
+
+Это параметр конфигурации add-on. Добавлять `api_key` в
+`configuration.yaml` Home Assistant не нужно.
+
+Добавьте тот же ключ в `/config/secrets.yaml`:
+
+```yaml
+autopass_api_key: "уникальный-длинный-ключ"
+```
+
+### 2. Команды Home Assistant
+
+Добавьте в `/config/configuration.yaml`:
+
+```yaml
+rest_command:
+  autopass_check_plate:
+    url: "http://local-autopass:8099/api/check"
+    method: POST
+    content_type: "application/json"
+    headers:
+      X-API-Key: !secret autopass_api_key
+    payload: >-
+      {
+        "plate": {{ plate | tojson }},
+        "direction": {{ direction | default("entry") | tojson }},
+        "camera": {{ camera | default("vorota") | tojson }},
+        "gate": {{ gate | default("Главные ворота") | tojson }},
+        "snapshot_url": {{ snapshot_url | default("") | tojson }}
+      }
+
+  autopass_frigate_event:
+    url: "http://local-autopass:8099/api/frigate-event"
+    method: POST
+    content_type: "application/json"
+    headers:
+      X-API-Key: !secret autopass_api_key
+    payload: >-
+      {
+        "type": {{ event_type | default("lpr") | tojson }},
+        "camera": {{ camera | default("") | tojson }},
+        "plate": {{ plate | default("") | tojson }},
+        "score": {{ score | default(0) | float }},
+        "id": {{ event_id | default("") | tojson }}
+      }
+```
+
+Если секция `rest_command:` уже существует, добавьте обе команды внутрь неё и
+не создавайте второй ключ `rest_command:`.
+
+Адрес `local-autopass` подходит для локально установленного add-on. Если
+внутреннее имя отличается, назначьте порт `8099` во вкладке **Сеть** add-on и
+используйте IP Home Assistant в обеих командах, например
+`http://192.168.1.10:8099/api/frigate-event`. Не публикуйте этот порт в интернет.
+
+### 3. Автоматизация Frigate
+
+Добавьте в `/config/automations.yaml`:
+
+```yaml
+- id: autopass_frigate_gate
+  alias: "Автопропуск: Frigate → add-on"
+  triggers:
+    - trigger: mqtt
+      topic: frigate/tracked_object_update
+  conditions:
+    - condition: template
+      value_template: >-
+        {% set d = trigger.payload | from_json(default={}) %}
+        {{ d.get('type') == 'lpr' }}
+  actions:
+    - action: rest_command.autopass_frigate_event
+      data:
+        event_type: "{{ trigger.payload_json.get('type', '') }}"
+        camera: "{{ trigger.payload_json.get('camera', '') }}"
+        plate: "{{ trigger.payload_json.get('plate', '') }}"
+        score: "{{ trigger.payload_json.get('score', 0) }}"
+        event_id: "{{ trigger.payload_json.get('id', '') }}"
+      response_variable: result
+  mode: queued
+  max: 10
+```
+
+Если в `configuration.yaml` уже есть стандартная строка
+`automation: !include automations.yaml`, повторно добавлять её не нужно.
+
+После изменений выполните проверку конфигурации в
+**Инструменты разработчика → YAML** и перезапустите Home Assistant. В списке
+действий должны появиться `rest_command.autopass_check_plate` и
+`rest_command.autopass_frigate_event`.
