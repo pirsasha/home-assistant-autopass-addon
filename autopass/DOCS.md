@@ -52,7 +52,7 @@ autopass_api_key: "уникальный-длинный-ключ"
 ```yaml
 rest_command:
   autopass_check_plate:
-    url: "http://local-autopass:8099/api/check"
+    url: "http://86015966-autopass:8099/api/check"
     method: POST
     content_type: "application/json"
     headers:
@@ -67,7 +67,7 @@ rest_command:
       }
 
   autopass_frigate_event:
-    url: "http://local-autopass:8099/api/frigate-event"
+    url: "http://86015966-autopass:8099/api/frigate-event"
     method: POST
     content_type: "application/json"
     headers:
@@ -85,9 +85,14 @@ rest_command:
 Если секция `rest_command:` уже существует, добавьте обе команды внутрь неё и
 не создавайте второй ключ `rest_command:`.
 
-Адрес `local-autopass` подходит для локально установленного add-on. Если
-внутреннее имя отличается, назначьте порт `8099` во вкладке **Сеть** add-on и
-используйте IP Home Assistant в обеих командах, например
+`86015966-autopass` — постоянное внутреннее имя для установки из репозитория
+`https://github.com/pirsasha/home-assistant-autopass-addon`. Его не нужно
+вычислять: скопируйте пример без изменений. Проверить имя можно во вкладке
+информации add-on.
+
+`local-autopass` используется только для локальной установки исходников в
+`/addons/autopass`. Если внутренний DNS недоступен, назначьте порт `8099` во
+вкладке **Сеть** add-on и используйте IP Home Assistant, например
 `http://192.168.1.10:8099/api/frigate-event`. Не публикуйте этот порт в интернет.
 
 ### 3. Автоматизация Frigate
