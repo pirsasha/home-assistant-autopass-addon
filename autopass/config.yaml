@@ -1,5 +1,5 @@
 name: Автопропуск
-version: "0.16.1"
+version: "0.17.0"
 slug: autopass
 description: Управление автомобильными пропусками и проверка номеров
 url: https://github.com/pirsasha/home-assistant-autopass-addon
@@ -18,10 +18,12 @@ homeassistant_api: true
 ports:
   8099/tcp: null
 ports_description:
-  8099/tcp: API для автоматизаций Home Assistant (оставьте пустым, если не нужен)
+  8099/tcp: Локальный веб-интерфейс и API (публикуйте порт только при необходимости)
 map:
   - addon_config:rw
 options:
   api_key: ""
+  local_access_enabled: false
 schema:
   api_key: password?
+  local_access_enabled: bool
