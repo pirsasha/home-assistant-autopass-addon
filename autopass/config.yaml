@@ -1,5 +1,5 @@
 name: Автопропуск
-version: "0.19.16"
+version: "0.19.17"
 slug: autopass
 description: Управление автомобильными пропусками и проверка номеров
 url: https://github.com/pirsasha/home-assistant-autopass-addon
