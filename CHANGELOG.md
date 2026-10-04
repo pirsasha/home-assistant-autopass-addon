@@ -1,5 +1,19 @@
 # История изменений
 
+## 0.19.23
+
+- удалённое обновление add-on из центра поддержки (`update_addon`);
+- сбор журналов Home Assistant Core, Supervisor и Frigate (`collect_ha_logs`);
+- диагностика ворот без открытия: состояние сущностей, доступность кадров
+  Frigate (`gate_diagnostics`);
+- выгрузка кадров с камер в центр поддержки (`upload_snapshot`);
+- просмотр настроек с маскировкой секретов (`get_options`) и правка безопасных
+  параметров с обязательной причиной и записью в аудит (`set_options`);
+- список и запуск полного бэкапа Home Assistant (`list_ha_backups`,
+  `create_ha_backup`);
+- в heartbeat добавлен блок `system`: версии add-on, Home Assistant и Supervisor,
+  доступные обновления, диск и имя хоста.
+
 ## 0.19.22
 
 - add-on запрашивает доступ к Supervisor API (`hassio_api: true`,
