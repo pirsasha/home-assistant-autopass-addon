@@ -2,9 +2,11 @@ name: Автопропуск
 version: "0.19.29"
 slug: autopass
 description: Управление автомобильными пропусками и проверка номеров
+url: https://github.com/pirsasha/home-assistant-autopass-addon
 arch:
   - aarch64
   - amd64
+image: ghcr.io/pirsasha/{arch}-autopass
 startup: application
 boot: auto
 init: false
