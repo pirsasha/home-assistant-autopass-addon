@@ -1,0 +1,29 @@
+name: Check changelog
+
+# Только проверка метаданных: сборка образов здесь не выполняется
+# (образы публикуются локально через Docker Buildx).
+on:
+  push:
+    paths:
+      - "CHANGELOG.md"
+      - "autopass/CHANGELOG.md"
+      - "autopass/config.yaml"
+      - "scripts/check_changelog.py"
+  pull_request:
+    paths:
+      - "CHANGELOG.md"
+      - "autopass/CHANGELOG.md"
+      - "autopass/config.yaml"
+      - "scripts/check_changelog.py"
+  workflow_dispatch:
+
+jobs:
+  changelog:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Проверить, что changelog для Home Assistant содержит текущую версию
+        run: python scripts/check_changelog.py
