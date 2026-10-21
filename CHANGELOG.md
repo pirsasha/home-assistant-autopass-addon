@@ -1,5 +1,15 @@
 # История изменений
 
+## 0.19.66
+
+- P2.1a: packet-5 vehicle geometry diagnostics now separate current and
+  historical state: fresh/stale tracks, fresh/total stationary candidates,
+  fresh/total ambiguous observations and stale-transition counters;
+- candidate freshness uses monotonic receiver time; a moving, ambiguous or stale
+  candidate is never shown as a confidently stationary current vehicle;
+- UI labels are Russian and explicitly distinguish "сейчас" from "всего";
+- no vehicle authorization, gate control or Shadow Mode was added.
+
 ## 0.19.65
 
 - добавлена выключенная по умолчанию metadata-only диагностика PX WebSocket:
