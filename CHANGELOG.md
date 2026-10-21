@@ -1,5 +1,17 @@
 # История изменений
 
+## 0.19.65
+
+- добавлена выключенная по умолчанию metadata-only диагностика PX WebSocket:
+  счётчики типов пакетов, безопасные категории событий, наличие rule/zone/object/
+  bbox/timestamp полей, повторы object ID и интервалы обновлений без номеров,
+  изображений, сырого JSON и сырых идентификаторов;
+- P1.1: поддержаны вложенные packet-2 `events[].objects[]` без двойного счёта
+  одинаковых top-level/nested объектов; повторы object ID разделены на
+  within-event, same-packet, across-packet и cross-event; identity stability
+  явно помечена как UNVERIFIED, а неизвестная структура packet 10 не выдаётся
+  за отсутствие объектов.
+
 ## 0.19.64
 
 - исправлен вход через Home Assistant Ingress после усиления проверки
