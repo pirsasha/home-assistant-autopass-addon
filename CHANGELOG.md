@@ -1,5 +1,15 @@
 # История изменений
 
+## 0.19.67
+
+- добавлен read-only endpoint `/api/px-cameras/ivs-geometry`: зоны
+  region-entrance и линии line-crossing читаются через существующую сессию
+  PX-воркера, без нового логина и записи в камеру;
+- добавлен read-only endpoint `/api/px-cameras/camera-settings`: focus mode,
+  exposure/shutter, image/WDR и zoom читаются через существующую сессию;
+- в настройках появилась визуальная схема зон/линий (SVG, не видео);
+- правки камеры и автоматическое управление воротами не добавлены.
+
 ## 0.19.66
 
 - P2.1a: packet-5 vehicle geometry diagnostics now separate current and
