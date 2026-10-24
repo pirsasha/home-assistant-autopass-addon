@@ -1,5 +1,14 @@
 # История изменений
 
+## 0.19.69
+
+- добавлен read-only shadow-слой «стоящая машина»: packet-5 vehicle + зона
+  region-entrance + непустой номер + dwell 5/15 секунд;
+- линия (`line_crossing`) подавляет повторное открытие;
+- отображается только `would_open`/`would_retry`; команды воротам и реле не
+  добавлены;
+- endpoint `/api/px-cameras/shadow`; блок «Shadow: стоящая машина» в настройках.
+
 ## 0.19.68
 
 - исправлен POST диагностики PX: добавлен `Content-Type: application/json`;
