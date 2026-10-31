@@ -1,5 +1,5 @@
 name: Автопропуск
-version: "0.19.87"
+version: "0.19.88"
 slug: autopass
 description: Управление автомобильными пропусками и проверка номеров
 url: https://github.com/pirsasha/home-assistant-autopass-addon
@@ -25,6 +25,8 @@ map:
   - addon_config:rw
 options:
   api_key: ""
+  dataset_export_api_key: ""
+  dataset_export_collector_id: ""
   local_access_enabled: false
   support_cloud_enabled: false
   support_cloud_url: ""
@@ -33,6 +35,8 @@ options:
   support_allow_remote_commands: false
 schema:
   api_key: password?
+  dataset_export_api_key: password?
+  dataset_export_collector_id: str?
   local_access_enabled: bool
   support_cloud_enabled: bool
   support_cloud_url: str?
