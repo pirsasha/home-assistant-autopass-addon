@@ -24,7 +24,7 @@ ROOT = Path(__file__).resolve().parents[1]
 CONFIG = ROOT / "autopass" / "config.yaml"
 ROOT_CHANGELOG = ROOT / "CHANGELOG.md"
 ADDON_CHANGELOG = ROOT / "autopass" / "CHANGELOG.md"
-HEADING = re.compile(r"^## (\S+)\s*$", re.M)
+HEADING = re.compile(r"^## (\d+\.\d+\.\d+)(?:\s+.*)?\s*$", re.M)
 
 
 def current_version() -> str:
